@@ -1,0 +1,27 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <label>
+    Mot de passe:
+    <input type="password" formControlName="password">
+  </label>
+
+  <div formGroupName="credentials">
+    <div>
+      <label>
+        Email:
+        <input type="email" formControlName="email">
+        <div *ngIf="userForm.get('credentials.email')?.errors && !userForm.get('credentials.email')?.pristine" class="error-msg">
+          <div [hidden]="!userForm.get('credentials.email')?.errors?.['required']">email is required.</div>
+          <div [hidden]="!userForm.get('credentials.email')?.invalid">email is invalid: {{ userForm.get("credentials.email")?.errors?.['email'].rules }}</div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <button type="submit">Inscription</button>
+</form>
+
+<!-- Affichage des informations utilisateur -->
+<div *ngIf="userForm.valid">
+  <h2>Informations utilisateur</h2>
+  <p>Email: {{ userForm.value.credentials.email }}</p>
+</div>
